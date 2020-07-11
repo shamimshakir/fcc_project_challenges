@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filterable Menu</title>
+    <style>
+      * {
+          margin: 0;
+          padding: 0;
+      }
+
+      .wrapper {
+          padding: 0 10%;
+      }
+
+      h2.sectionTitle {
+          text-align: center;
+          font-size: 32px;
+          color: #607D8B;
+          padding-top: 23px;
+          padding-bottom: 33px;
+      }
+
+      .categoryList {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-bottom: 25px;
+      }
+
+      .categoryList button {
+          border: 1px solid #607c8a;
+          margin: 0px 3px;
+          background: none;
+          border-radius: 3px;
+          padding: 6px 9px;
+          font-size: 15px;
+          outline: none;
+          cursor: pointer;
+          color: #314a56;
+          transition: .2s;
+          text-transform: capitalize;
+      }
+
+      .categoryList button:hover {
+          background: #607c8a29;
+      }
+
+      .movieListContainer {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          grid-gap: 30px;
+      }
+      .movieListContainer article {
+          display: grid;
+          grid-template-columns: 0.7fr 1fr;
+          grid-column-gap: 25px;
+          box-shadow: 0px 16px 20px 0 #3333331f;
+      }
+
+      .poster img {
+          height: 230px;
+          width: 100%;
+      }
+
+
+      .filmInfo 
+       .filmPlot {
+          color: #515151;
+          line-height: 24px;
+          margin-top: 12px;
+          height: 122px;
+          overflow: hidden;
+      }
+
+      .filmInfo 
+       h2.movieName {
+          color: #7263c9;
+          font-size: 29px;
+          margin-bottom: 10px;
+      }
+
+      .filmInfo h3 {
+          color: #000;
+          font-size: 16px;
+          font-weight: normal;
+          line-height: 20px;
+      }
+    </style>
+</head>
+<body>
+    
+    <div class="wrapper">
+        <h2 class="sectionTitle">Favourite Movies</h2>
+        <div class="categoryList"></div>
+
+        <div class="movieListContainer"></div>
+    </div>
+
+    <script>
+      const fovouriteFilms = [
+          {
+              id: 1,
+              name: 'Life in a... Metro',
+              year: 2007,
+              rating: '9.8',
+              poster: './images/lifeInAmetro.jpg',
+              industry: 'bollywood',
+              info: `Life in a... Metro is a 2007 Indian musical drama film co-produced, written and directed by Anurag Basu, and set in Mumbai. It features an ensemble cast of Dharmendra, Nafisa Ali, Shilpa Shetty, Shiney Ahuja, Kay Kay Menon, Kangana Ranaut, Sharman Joshi, Konkona Sen Sharma and Irrfan Khan. The music is composed by Pritam with lyrics by Sayeed Quadri. The film was released on 11 May 2007.[1] It narrates the lives of nine people living in Mumbai[2] and deals with topics like extramarital affairs, sanctity of marriage, and love. The film was critically acclaimed for its story and screenplay. The general plot and a number of characters are based on two classic films, The Apartment and Brief Encounter.`
+          },
+          {
+              id: 2,
+              name: 'Charlie',
+              year: 2015,
+              rating: '9.8',
+              poster: './images/charlie.jpg',
+              industry: 'malayalam',
+              info: `Life in a... Metro is a 2007 Indian musical drama film co-produced, written and directed by Anurag Basu, and set in Mumbai. It features an ensemble cast of Dharmendra, Nafisa Ali, Shilpa Shetty, Shiney Ahuja, Kay Kay Menon, Kangana Ranaut, Sharman Joshi, Konkona Sen Sharma and Irrfan Khan. The music is composed by Pritam with lyrics by Sayeed Quadri. The film was released on 11 May 2007.[1] It narrates the lives of nine people living in Mumbai[2] and deals with topics like extramarital affairs, sanctity of marriage, and love. The film was critically acclaimed for its story and screenplay. The general plot and a number of characters are based on two classic films, The Apartment and Brief Encounter.`
+          },
+          {
+              id: 3,
+              name: '96',
+              year: 2018,
+              rating: '9.8',
+              poster: './images/96.jpeg',
+              industry: 'tamil',
+              info: `Life in a... Metro is a 2007 Indian musical drama film co-produced, written and directed by Anurag Basu, and set in Mumbai. It features an ensemble cast of Dharmendra, Nafisa Ali, Shilpa Shetty, Shiney Ahuja, Kay Kay Menon, Kangana Ranaut, Sharman Joshi, Konkona Sen Sharma and Irrfan Khan. The music is composed by Pritam with lyrics by Sayeed Quadri. The film was released on 11 May 2007.[1] It narrates the lives of nine people living in Mumbai[2] and deals with topics like extramarital affairs, sanctity of marriage, and love. The film was critically acclaimed for its story and screenplay. The general plot and a number of characters are based on two classic films, The Apartment and Brief Encounter.`
+          },
+          {
+              id: 4,
+              name: 'Premam',
+              year: 2016,
+              rating: '9.8',
+              poster: './images/premam.png',
+              industry: 'malayalam',
+              info: `Life in a... Metro is a 2007 Indian musical drama film co-produced, written and directed by Anurag Basu, and set in Mumbai. It features an ensemble cast of Dharmendra, Nafisa Ali, Shilpa Shetty, Shiney Ahuja, Kay Kay Menon, Kangana Ranaut, Sharman Joshi, Konkona Sen Sharma and Irrfan Khan. The music is composed by Pritam with lyrics by Sayeed Quadri. The film was released on 11 May 2007.[1] It narrates the lives of nine people living in Mumbai[2] and deals with topics like extramarital affairs, sanctity of marriage, and love. The film was critically acclaimed for its story and screenplay. The general plot and a number of characters are based on two classic films, The Apartment and Brief Encounter.`
+          },
+          {
+              id: 5,
+              name: 'Bangalore Days',
+              year: 2014,
+              rating: '9.8',
+              poster: './images/bangloreDays.jpeg',
+              industry: 'malayalam',
+              info: `Life in a... Metro is a 2007 Indian musical drama film co-produced, written and directed by Anurag Basu, and set in Mumbai. It features an ensemble cast of Dharmendra, Nafisa Ali, Shilpa Shetty, Shiney Ahuja, Kay Kay Menon, Kangana Ranaut, Sharman Joshi, Konkona Sen Sharma and Irrfan Khan. The music is composed by Pritam with lyrics by Sayeed Quadri. The film was released on 11 May 2007.[1] It narrates the lives of nine people living in Mumbai[2] and deals with topics like extramarital affairs, sanctity of marriage, and love. The film was critically acclaimed for its story and screenplay. The general plot and a number of characters are based on two classic films, The Apartment and Brief Encounter.`
+          },
+          {
+              id: 6,
+              name: 'Kumbalangi Nights',
+              year: 2019,
+              rating: '9.8',
+              poster: './images/kumbalangiNigths.jpg',
+              industry: 'malayalam',
+              info: `Life in a... Metro is a 2007 Indian musical drama film co-produced, written and directed by Anurag Basu, and set in Mumbai. It features an ensemble cast of Dharmendra, Nafisa Ali, Shilpa Shetty, Shiney Ahuja, Kay Kay Menon, Kangana Ranaut, Sharman Joshi, Konkona Sen Sharma and Irrfan Khan. The music is composed by Pritam with lyrics by Sayeed Quadri. The film was released on 11 May 2007.[1] It narrates the lives of nine people living in Mumbai[2] and deals with topics like extramarital affairs, sanctity of marriage, and love. The film was critically acclaimed for its story and screenplay. The general plot and a number of characters are based on two classic films, The Apartment and Brief Encounter.`
+          }
+      ]
+
+
+      const movieListContainer = document.querySelector('.movieListContainer')
+      const categoryList = document.querySelector('.categoryList')
+
+      window.addEventListener('DOMContentLoaded', function(){
+          displayMovies(fovouriteFilms)
+          displayButtons()
+      })
+
+      function displayButtons(){
+          const industries = fovouriteFilms.reduce((values, item) => {
+              if(!values.includes(item.industry)){
+                  values.push(item.industry)
+              }
+              return values
+          },['all'])
+
+          const categoryHtml = industries.map(cat => {
+              return `<button data-industry="${cat}">${cat}</button>`
+          }).join("")
+
+          categoryList.innerHTML = categoryHtml
+          const catButtons = document.querySelectorAll('.categoryList button')
+
+          catButtons.forEach(button => {
+              button.addEventListener('click', (e)=>{
+                  const industry = e.currentTarget.dataset.industry
+                  const movieByIndustry = fovouriteFilms.filter(movie => {
+                      return movie.industry === industry
+                  })
+                  if(industry === 'all'){
+                      displayMovies(fovouriteFilms)
+                  }else{
+                      displayMovies(movieByIndustry)
+                  }
+              })
+          })
+
+      }
+
+      function displayMovies(movieArr){
+          const articles = movieArr.map(movie => {
+              return `<article>
+              <div class="poster">
+                  <img src="${movie.poster}" alt="">
+              </div>
+              <div class="filmInfo">
+                  <h2 class="movieName">${movie.name}</h2>
+                  <h3 class="movieYear">Release: ${movie.year}</h3>
+                  <h3 class="rating">Rating: ${movie.rating}</h3>
+                  <div class="filmPlot">${movie.info}</div>
+              </div>
+          </article>`
+          })
+          movieListContainer.innerHTML = articles.join("")
+      }
+    </script>
+</body>
+</html>
