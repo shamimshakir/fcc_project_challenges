@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+        body, html {
+            width: 100%;
+            background-image: url(./images/weatherBG.jpeg);
+            height: 100%;
+            overflow: hidden;
+            background-size: cover;
+            background-position: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .weatherWrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+        h2.appTitle {
+            position: absolute;
+            top: 27px;
+            font-size: 46px;
+        }
+
+        h2.appTitle::after {
+            position: absolute;
+            left: 50%;
+            bottom: -12px;
+            width: 130px;
+            height: 3px;
+            background: #ffffff91;
+            content: "";
+            margin-left: -65px;
+        }
+
+        .weather {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+        }
+
+        .weatherLocation {
+            font-size: 20px;
+            font-weight: normal;
+            margin-bottom: 9px;
+        }
+
+        .weatherStatus {
+            font-size: 53px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .weatherStatus span.tempStatus {
+            font-weight: normal !important;
+            margin-left: 1px;
+            font-size: 43px;
+        }
+
+        span.temp {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .weatherIcon img {
+            width: 62px;
+        }
+        
+        .tempDescription {
+            font-size: 20px;
+            display: flex;
+            flex-flow: row-reverse;
+            align-items: center;
+        }
+        .overlayBg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            content: "";
+            background: #333333ba;
+            z-index: -1;
+        }
+        span.tempDegree {
+            position: absolute;
+            right: -18px;
+            top: 6px;
+            width: 10px;
+            height: 10px;
+            content: "";
+            border: 2px solid;
+            border-radius: 9px;
+        }
+
+        #spinner{
+            visibility: hidden;
+            width: 80px;
+            height: 80px;
+
+            border: 2px solid #f3f3f3;
+            border-top:3px solid #f25a41;
+            border-radius: 100%;
+
+            position: absolute;
+            top:0;
+            bottom:0;
+            left:0;
+            right: 0;
+            margin: auto;
+            z-index: 9;
+            animation: spin 1s infinite linear;
+        }
+
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            } to {
+                transform: rotate(360deg);
+            }
+        }
+
+        #spinner.show {
+            visibility: visible;
+        }
+    </style>
+</head>
+<body>
+    <div id="spinner"></div> 
+    <div class="weatherWrapper">
+        <h2 class="appTitle">Weather App</h2>
+        <div class="weather">
+            <div class="weatherLocation"></div>
+            <div class="weatherStatus">
+                <span class='temp'></span>
+                <span class="tempStatus"></span> 
+            </div>
+            <div class="tempDescription">
+                <span></span>
+            </div>
+        </div>
+        <div class="overlayBg"></div>
+    </div>
+</body>
+
+<script>
+    let tempSpan = document.querySelector('.temp')
+    let descriptionDiv = document.querySelector('.tempDescription')
+    let tempStatus = document.querySelector('.tempStatus')
+    let weatherStatus = document.querySelector('.weatherStatus')
+    const spinner = document.getElementById("spinner");
+
+    function showSpinner() {
+        spinner.classList.add('show');
+    }
+    function hideSpinner() {
+        spinner.classList.remove('show');
+    }
+    if(navigator.geolocation){
+        showSpinner()
+        navigator.geolocation.getCurrentPosition(position => {
+            let long = position.coords.longitude;
+            let lat = position.coords.latitude;
+            
+            let api = `https://fcc-weather-api.glitch.me/api/current?lat=${lat}&lon=${long}`;
+
+            fetch(api)
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    console.log(data)
+                    hideSpinner()
+                    let celcius = Math.floor(data.main.temp);
+                    updateTemperature(celcius)
+                    updateTempDescription(data.weather[0].description)
+                    updateLocation(data.name, data.sys.country)
+                    updateIcon(data.weather[0].icon)
+
+                    weatherStatus.addEventListener('click', () => {
+                        if(tempStatus.textContent === 'C'){
+                            let fahrenheit = Math.floor(celcius * 9 / 5 + 32);
+                            updateTemperature(fahrenheit, 'F');
+                        }else{
+                            updateTemperature(celcius, 'C');
+                        }
+                    })
+                })
+        })
+    }else{
+        alert('sorry! Failed to get your location');
+    }
+    function updateTempDescription(desc){
+        descriptionDiv.textContent = desc;
+    }
+    function updateTemperature(temp, deg='C'){
+        tempSpan.textContent = temp;
+        let degree = document.createElement('span');
+        degree.classList.add('tempDegree');
+        tempSpan.appendChild(degree)
+        tempStatus.textContent = deg;
+    }
+    function updateLocation(city, country){
+        let weatherLocation = document.querySelector('.weatherLocation');
+        weatherLocation.textContent = `${city} / ${country}`;
+    }
+    function updateIcon(icon){
+        let weatherIcon = document.createElement('div')
+        weatherIcon.classList.add('weatherIcon')
+        weatherIcon.innerHTML = `<img src="${icon}" alt="">`;
+        descriptionDiv.appendChild(weatherIcon)
+    }
+</script>
+</html>
