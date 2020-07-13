@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <title>Document</title>
+    <style>
+        .wrraper {
+            margin: auto;
+            width: 800px;
+        }
+
+        body{
+            font-family: 'Open Sans', sans-serif;
+        }
+
+        .titleTop img {
+            width: 128px;
+        }
+
+        .titleTop h2 {
+            margin: 0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .titleTop {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .articeSearchSection form {
+            width: 350px;
+            margin: auto;
+            position: relative;
+            border: 2px solid #3488cc;
+            height: 34px;
+            display: flex;
+            align-items: center;
+            padding-left: 10px;
+            box-sizing: border-box;
+            border-radius: 4px;
+        }
+
+        .articeSearchSection form input {
+            width: 77%;
+            border: none;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .articeSearchSection form button {
+            position: absolute;
+            right: 37px;
+            top: 0px;
+            height: 100%;
+            border: none;
+            background: #3588cc;
+            padding: 0px 10px;
+            color: #fff;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            box-sizing: border-box;
+            cursor: pointer;
+        }
+
+        form#wikiSearchForm a.random {
+            position: absolute;
+            right: 0;
+            top: 0;
+            background: #3488cc;
+            color: #fff;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            box-sizing: border-box;
+            border-left: 1px solid #333;
+        }
+        .separator {
+            border: 1px solid #33333314;
+            margin: 50px;
+        }
+
+        .singleArticle h2 {
+            font-weight: 600;
+            font-size: 19px;
+            margin-bottom: 1px;
+        }
+
+        .singleArticle a.wikiLink {
+            font-size: 14px;
+            margin-bottom: 3px;
+            display: block;
+            color: #233b92;
+        }
+
+        .singleArticle > p {
+            font-size: 14px;
+            line-height: 23px;
+            color: #333;
+        }
+
+        .singleArticle {
+            margin-bottom: 20px;
+        }
+        div#spinner {
+            position: fixed;
+            left: 50%;
+            top: 50%;
+            width: 100px;
+            border: 2px solid transparent;
+            border-top: 4px solid #2196F3;
+            height: 100px;
+            border-radius: 66%;
+            animation: spin 1s infinite linear;
+            visibility: hidden;
+            opacity: 0;
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            } to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="wrraper">
+        <div class="titleTop">
+            <img src="./images/wikipedia.png" alt="">
+            <h2 class="title">Wikipedia Viewer</h2>
+        </div>
+
+        <div class="articeSearchSection">
+            <form action="" id="wikiSearchForm">
+                <input class="searchkey" type="text" placeholder="Search Artice">
+                <button type="submit"><i class="fas fa-search"></i></button>
+                <a class="random" href="https://en.wikipedia.org/wiki/Special:Random" target="blank"><i class="fas fa-random"></i></a>
+            </form>
+        </div>
+        <div class="separator"></div>
+        <div id="searchedArticles"></div>
+        <div id="spinner"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/js/all.min.js"></script>
+    <script>
+        const wikiSearchForm = document.getElementById('wikiSearchForm');
+        wikiSearchForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            let searchInput = wikiSearchForm.querySelector('input');
+            let searchKey = searchInput.value;
+            searchWiki(searchKey)
+        })
+
+        function searchWiki(searchKey){
+            showSpinner()
+            const api = `https://en.wikipedia.org/w/api.php?action=query&list=search&prop=info&inprop=url&utf8=&format=json&origin=*&srlimit=20&srsearch=${searchKey}`;
+            
+            fetch(api)
+                .then(response => response.json())
+                .then(data => {
+                    const results = data.query.search;
+                    displayResults(results)
+                    hideSpinner();
+                })
+        }
+        
+        function displayResults(results){
+            const singleResults = results.map(article => {
+                const url = encodeURI(`https://en.wikipedia.org/wiki/${article.title}`);
+                return `<div class="singleArticle">
+                    <h2>${article.title}</h2>
+                    <a class="wikiLink" href="${url}" target="_blank">${url}</a>
+                    <p>${article.snippet}</p>
+                </div>`;
+            }).join('')
+            const searchedArticles = document.querySelector('#searchedArticles');
+            searchedArticles.innerHTML = singleResults;   
+        }
+
+        function showSpinner(){
+            const spinner = document.querySelector('#spinner');
+            spinner.style.visibility = 'visible'
+            spinner.style.opacity = 1;
+        }
+        function hideSpinner(){
+            const spinner = document.querySelector('#spinner');
+            spinner.style.visibility = 'hidden'
+            spinner.style.opacity = 0;
+        }
+    </script>
+</body>
+</html>
