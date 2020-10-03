@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Relaxer App</title>
+    <style>
+        * {
+            margin: 0;
+        }
+
+        body, html {
+            height: 100vh;
+            background: #3F51B5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .relaxerApp h1 {
+            color: #dedede;
+            font-size: 25px;
+            margin-bottom: 17px;
+        }
+
+        .relaxerApp {
+            text-align: center;
+        }
+
+        .relaxerApp button {
+            border: 0;
+            background: #4CAF50;
+            color: #fff;
+            padding: 5px 15px;
+            font-size: 15px;
+            border-radius: 3px;
+            outline: none;
+        }
+        .relaxerApp h2 {
+            color: #fff;
+            font-size: 45px;
+        }
+        p.instructionTime {
+            margin-bottom: 20px;
+            color: #fff;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="relaxerApp">
+        <h1>Relaxer: 10 seconds</h1>
+        <h2 class="instruction"></h2>
+        <p class="instructionTime"></p>
+        <button onclick="startRelaxing()">Start</button>
+        <button onclick="stopRelaxing()">Stop</button>
+    </div>
+    <script>
+        const instruction = document.querySelector('.instruction');
+        const instructionTime = document.querySelector('.instructionTime');
+        function relaxAnimation(){
+            instruction.textContent = "Breathe In";
+            instructionTime.textContent = "( 4 Seconds )";
+            setTimeout(() => {
+                instruction.textContent = "Hold";
+                instructionTime.textContent = "( 2 Seconds )";
+                setTimeout(() => {
+                    instruction.textContent = "Breathe Out";
+                    instructionTime.textContent = "( 4 Seconds )"
+                }, 2000);
+            }, 4000);
+        }
+        let startTime;
+
+        function startRelaxing(){
+            relaxAnimation();
+            startTime = setInterval(relaxAnimation, 10000)
+        }
+
+        function stopRelaxing(){
+            clearInterval(startTime);
+        }
+
+    </script>
+</body>
+</html>
