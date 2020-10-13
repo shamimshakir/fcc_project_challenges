@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Javascript Animation</title>
+    <style>
+        * {
+            margin: 0;
+        }
+        .animationText span.fade {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .animationText span {
+            opacity: 0;
+            transition: all 0.3s ease;
+            transform: translateY(50px);
+            display: inline-block;
+        }
+        h2.animationText {
+            color: #fff;
+            text-align: center;
+            font-size: 60px;
+        }
+        .textAnimationSection {
+            background: #333;
+            padding: 80px;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+<div class="textAnimationSection">
+    <h2 class="animationText"></h2>
+</div>
+<script>
+    const animationText = document.querySelector('.animationText');
+    let animationStr = "Modern Javascript";
+
+    for(let i = 0; i < animationStr.length; i++){
+        animationText.innerHTML += `<span>${animationStr[i]}</span>`;
+    }
+    let char = 0;
+    let timer = setInterval(() => {
+        let span = animationText.querySelectorAll('span')[char];
+        span.classList.add('fade');
+        char++;
+        if(char == animationStr.length){
+            complete();
+            return;
+        }
+    }, 20);
+    function complete(){
+        clearInterval(timer);
+        timer = null;
+    }
+</script>
+</body>
+</html>
