@@ -5,3 +5,4 @@
   4. Wikipedia Viewer: https://shamimshakir.github.io/javascript-projects/wikipedia_viewer.html
   5. Create Account Form Validation: https://shamimshakir.github.io/javascript-projects/regFormValidation.html
   6. Meditation / Breathing App: https://shamimshakir.github.io/javascript-projects/relaxerapp.html
+  7. Todo List: https://shamimshakir.github.io/javascript-projects/todojs.html
