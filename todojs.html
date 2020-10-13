@@ -8,9 +8,23 @@
     <title>TODO JS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+        }
+
+        body {
+            background: #e6fff2;
+        }
+
+        form {
+            position: relative;
+        }
+
         .todoSection {
             width: 400px;
             margin: 20px auto;
+            box-sizing: border-box;
+            padding: 26px;
         }
 
         .singleTodo {
@@ -19,6 +33,12 @@
             grid-template-columns: 6% 87% 6%;
             align-content: center;
             align-items: center;
+            padding: 11px 14px;
+            background: #fff;
+            margin-bottom: 7px;
+            border-radius: 5px;
+            box-sizing: border-box;
+            transition: all .5s ease-in-out;
         }
 
         .todoLists {
@@ -54,42 +74,138 @@
             color: #444;
         }
 
+        .singleTodo.fade {
+            transform: scale(1.5);
+            opacity: 0;
+        }
+
         button.todoTrushBtn i {
             color: #e65555;
+        }
+        .singleTodo.completed {
+            text-decoration: line-through;
+            opacity: .6;
+        }
+
+        input#todoInput {
+            position: relative;
+            width: 84%;
+            border: 2px solid #333;
+            outline: none;
+            height: 41px;
+            font-size: 16px;
+            padding-left: 10px;
+            box-sizing: border-box;
+            border-radius: 34px;
+            background: none;
+        }
+
+        button#addTodoButton {
+            outline: none;
+            cursor: pointer;
+            border: 2px solid #333;
+            border-radius: 44px;
+            height: 43px;
+            box-sizing: border-box;
+            width: 55px;
+            font-size: 26px;
+            text-align: center;
+            float: right;
+            background: none;
+        }
+        .singleTodo.completed button.statusBtn i.far.fa-check-square {
+            display: block !important;
+        }
+
+        .singleTodo.completed button.statusBtn i.far.fa-square {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="todoSection">
-        <form>
-            <input type="text" id="todoInput">
-            <button id="addTodoButton">Add</button>
-        </form>
-        <div class="todoLists"></div>
-    </div>
+<div class="todoSection">
+    <form>
+        <input type="text" id="todoInput">
+        <button id="addTodoButton">+</button>
+    </form>
+    <div class="todoLists"></div>
+</div>
 
-    <script>
-        const todoInput = document.getElementById('todoInput');
-        const addTodoButton = document.getElementById('addTodoButton');
-        const todoLists = document.querySelector('.todoLists');
+<script>
+    const todoInput = document.getElementById('todoInput');
+    const addTodoButton = document.getElementById('addTodoButton');
+    const todoLists = document.querySelector('.todoLists');
+    document.addEventListener('DOMContentLoaded', displayTodoItems);
+    addTodoButton.addEventListener('click', saveTodoItem);
 
-        addTodoButton.addEventListener('click', saveTodoItem);
-
-        function creatingElement(element, classes, content){
-            let cElement = document.createElement(element);
-            if(classes != ""){
-                cElement.classList.add(classes);
-            }
-            if(content != ""){
-                cElement.innerHTML = content;
-            }
-            return cElement;
+    function creatingElement(element, classes, content){
+        let cElement = document.createElement(element);
+        if(classes != ""){
+            cElement.classList.add(classes);
         }
+        if(content != ""){
+            cElement.innerHTML = content;
+        }
+        return cElement;
+    }
 
-        function saveTodoItem(e){
+    function saveTodoItem(e){
+        e.preventDefault();
+        let singleTodoDiv = creatingElement('div', 'singleTodo', "");
 
-            e.preventDefault();
+        // Status Button Create
+        let statusBtn = creatingElement('button', 'statusBtn', `<i class="far fa-check-square"></i><i class="far fa-square"></i>`);
+        singleTodoDiv.appendChild(statusBtn);
 
+        // create item content
+        let singleTodoDivP = creatingElement('p', 'todoItemTodo', todoInput.value);
+        singleTodoDiv.appendChild(singleTodoDivP);
+
+        // create trush button
+        let todoTrushBtn = creatingElement('button', 'todoTrushBtn', `<i class="fas fa-trash"></i>`);
+        singleTodoDiv.appendChild(todoTrushBtn);
+
+        // append single todo div to todolist div
+        todoLists.appendChild(singleTodoDiv);
+
+        // Save to Local Storage
+        saveTodoToLocalStorage(todoInput.value)
+        todoInput.value = "";
+    }
+
+
+    todoLists.addEventListener('click', clickActionTrigger);
+    function clickActionTrigger(e) {
+        const item = e.target;
+        if(item.classList[0] == "todoTrushBtn"){
+            const singleTodo = item.parentElement;
+            singleTodo.classList.add('fade');
+            removeFromStorage(singleTodo);
+            singleTodo.addEventListener('transitionend', () => {
+                singleTodo.remove();
+            })
+        }
+        if(item.classList.contains('statusBtn')){
+            item.parentElement.classList.toggle('completed')
+        }
+    }
+
+
+    function saveTodoToLocalStorage(todo){
+        let todos = [];
+        if(localStorage.getItem('todos') !== null){
+            todos = JSON.parse(localStorage.getItem('todos'));
+        }
+        todos.push(todo);
+        localStorage.setItem('todos', JSON.stringify(todos));
+    }
+
+    function displayTodoItems(){
+        let todos = [];
+        if(localStorage.getItem('todos') !== null){
+            todos = JSON.parse(localStorage.getItem('todos'));
+        }
+        todos.forEach(todo => {
             let singleTodoDiv = creatingElement('div', 'singleTodo', "");
 
             // Status Button Create
@@ -97,7 +213,7 @@
             singleTodoDiv.appendChild(statusBtn);
 
             // create item content
-            let singleTodoDivP = creatingElement('p', 'todoItemTodo', todoInput.value);
+            let singleTodoDivP = creatingElement('p', 'todoItemTodo', todo);
             singleTodoDiv.appendChild(singleTodoDivP);
 
             // create trush button
@@ -106,26 +222,21 @@
 
             // append single todo div to todolist div
             todoLists.appendChild(singleTodoDiv);
-
-            // clear input value
-            todoInput.value = '';
-
+        })
+    }
+    function removeFromStorage(todo){
+        let todos = [];
+        if(localStorage.getItem('todos') !== null){
+            todos = JSON.parse(localStorage.getItem('todos'))
         }
+        let item = todo.querySelector('p').textContent;
+        let index = todos.indexOf(item);
+
+        todos.splice(index, 1);
+        localStorage.setItem('todos', JSON.stringify(todos))
+    }
 
 
-        // todoLists.addEventListener('click', (e) => {
-        //     if(e.target.classList.contains('todoTrushBtn')){
-        //         console.log('asdkh')
-        //     }
-        // })
-
-        todoLists.addEventListener('click', deleteTodo);
-
-        function deleteTodo(e) {
-            const item = e.target;
-            askd;
-        }
-
-    </script>
+</script>
 </body>
 </html>
