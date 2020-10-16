@@ -7,3 +7,4 @@
   6. Meditation / Breathing App: https://shamimshakir.github.io/javascript-projects/relaxerapp.html
   7. Todo List: https://shamimshakir.github.io/javascript-projects/todojs.html
   8. Text Animation: https://shamimshakir.github.io/javascript-projects/js_text_animation.html
+  9. Basic Calculator: https://shamimshakir.github.io/javascript-projects/calculator.html
