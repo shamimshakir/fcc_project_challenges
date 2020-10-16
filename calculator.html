@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator JS</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            height: 100vh;
+            background: #f3f3f3;
+        }
+        .calculatorArea {
+            width: 400px;
+            box-shadow: 0 0 20px #00000040;
+            margin: 40px auto;
+            padding: 20px;
+            box-sizing: border-box;
+            border-radius: 3px;
+            background: #fff;
+        }
+
+        .calculatorButtons {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-gap: 15px;
+        }
+
+        button.operand {
+            background: #3e3e3e !important;
+        }
+
+        .calculatorButtons button.span2 {
+            grid-column: span 2;
+        }
+
+        .calculatorButtons button {
+            border: none;
+            background: #48507b;
+            color: #fff;
+            padding: 10px;
+            cursor: pointer;
+            font-size: 20px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            outline: none;
+        }
+        .outputBox {
+            font-size: 30px;
+            height: 69px;
+            text-align: right;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .previousHistory {
+            height: 36px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="calculatorArea">
+    <div class="calculatorOutput">
+        <div class="previousHistory"></div>
+        <div class="outputBox"></div>
+    </div>
+    <div class="calculatorButtons">
+        <button id="clear">C</button>
+        <button id="backSpace">CE</button>
+        <button id="%" class="operator">%</button>
+        <button id="/" class="operator">/</button>
+        <button id="7" class="operand">7</button>
+        <button id="8" class="operand">8</button>
+        <button id="9" class="operand">9</button>
+        <button id="*" class="operator">*</button>
+        <button id="4" class="operand">4</button>
+        <button id="5" class="operand">5</button>
+        <button id="6" class="operand">6</button>
+        <button id="-" class="operator">-</button>
+        <button id="1" class="operand">1</button>
+        <button id="2" class="operand">2</button>
+        <button id="3" class="operand">3</button>
+        <button id="+" class="operator">+</button>
+        <button id="0" class="operand">0</button>
+        <button id="." class="operand">.</button>
+        <button id="=" class="equal span2">=</button>
+    </div>
+</div>
+<script>
+    let previousHistory = document.querySelector('.previousHistory');
+    let outputBox = document.querySelector('.outputBox');
+    let operands = document.querySelectorAll('button.operand');
+    let operators = document.querySelectorAll('.operator');
+    let equal = document.querySelector('.equal');
+    let clear = document.getElementById('clear');
+    let backSpace = document.getElementById('backSpace');
+
+
+    operands.forEach(operand => {
+        operand.addEventListener('click', e => {
+            updateOutputBox(operand.textContent);
+        })
+    });
+    backSpace.addEventListener('click', e => {
+        let nums = outputBox.textContent;
+        let removedLast = nums.slice(0, nums.length-1);
+        outputBox.textContent = removedLast;
+    })
+
+    operators.forEach(operator => {
+        operator.addEventListener('click', e => {
+            if(outputBox.textContent != ""){
+                updateHistoryBox(operator.textContent, outputBox.textContent);
+                outputBox.textContent = "";
+            }
+        })
+    });
+
+    equal.addEventListener('click', e => {
+        if(outputBox.textContent != "" && previousHistory.textContent != "") {
+            outputBox.textContent = calculate(previousHistory.textContent, outputBox.textContent);
+            previousHistory.textContent = "";
+        }
+    });
+
+    clear.addEventListener('click', e => {
+        outputBox.textContent = "";
+        previousHistory.textContent = "";
+    })
+
+    function updateOutputBox(number){
+        if(number == "." && outputBox.textContent.includes('.'))return;
+        outputBox.textContent += number;
+    }
+
+    function calculate(num1, num2){
+        if((num1 == "") || (num2 == ""))return;
+        let operator = num1.split('').pop();
+        num1 = Number(num1.slice(0, num1.length-1))
+        num2 = Number(num2);
+        if(operator == "+"){
+            return num1 + num2;
+        }else if(operator == "-"){
+            return num1 - num2;
+        }else if(operator == "*"){
+            return num1 * num2;
+        }else if(operator == "/"){
+            return num1 / num2;
+        }else if(operator == "%"){
+            return num1 % num2;
+        }
+    }
+
+    function updateHistoryBox(operator, currentNumber){
+        if(previousHistory.textContent != ""){
+            let total = calculate(previousHistory.textContent, currentNumber);
+            previousHistory.textContent = total + operator;
+        }else {
+            previousHistory.textContent = currentNumber + operator;
+        }
+    }
+</script>
+</body>
+</html>
