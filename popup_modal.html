@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Popup | Modal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body{
+            font-family: 'Open Sans', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .modal {
+            width: 450px;
+            background: #fff;
+            padding: 16px;
+            box-sizing: border-box;
+            border-radius: 4px;
+            position: fixed;
+            top: -34%;
+            z-index: 9999999999999999999;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            visibility: hidden;
+            transition: .3s;
+        }
+
+        .modal .modalHeader {
+            border-bottom: 1px solid #9a9a9a;
+            padding-bottom: 10px;
+            position: relative;
+        }
+
+        .modal .modalBody {
+            margin-top: 18px;
+        }
+
+        .button {
+            height: 38px;
+            font-size: 16px;
+            padding: 10px;
+            border: navajowhite;
+            border-radius: 3px;
+            margin: 10px;
+            cursor: pointer;
+            outline: none;
+        }
+        .buttonPrimary {
+            background: #0D47A1;
+            color: #fff;
+        }
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+            top: 3px;
+        }
+        .modal button.closeModal {
+            position: absolute;
+            right: 0;
+            top: 0;
+            border: none;
+            background: no-repeat;
+            font-size: 26px;
+            color: red;
+            cursor: pointer;
+            outline: none;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Modal 1 -->
+<div class="modal" data-modal-name="modal1">
+    <div class="modalHeader">
+        <h2>Javascript Modal Box | 1</h2>
+        <button class="closeModal">&times;</button>
+    </div>
+    <div class="modalBody">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda at deserunt, ducimus fugit harum magni
+            modi mollitia nesciunt nisi quisquam!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur dolorum.</p>
+    </div>
+</div>
+<!-- Modal 2 -->
+<div class="modal" data-modal-name="modal2">
+    <div class="modalHeader">
+        <h2>Javascript Modal Box | 2</h2>
+        <button class="closeModal">&times;</button>
+    </div>
+    <div class="modalBody">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda at deserunt, ducimus fugit harum magni
+            modi mollitia nesciunt nisi quisquam!</p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aspernatur dolorum.</p>
+    </div>
+</div>
+
+<button class="button buttonPrimary" data-modal="modal1">open modal 1</button>
+<button class="button buttonPrimary" data-modal="modal2">open modal 2</button>
+
+<script>
+    const modalBtns = document.querySelectorAll('[data-modal]');
+    const modals = document.querySelectorAll('[data-modal-name]');
+    const overlay = document.querySelector('.overlay');
+    const closeModals = document.querySelectorAll('.closeModal');
+
+    modalBtns.forEach(btn => btn.addEventListener('click', showModal));
+    closeModals.forEach(btn => btn.addEventListener('click', hideModal));
+
+    /****** Functions ******/
+    function showModal(){
+        let target = this.dataset.modal;
+        let targetModal = document.querySelector(`[data-modal-name = "${target}"]`);
+        targetModal.classList.add('active');
+        showOverLay();
+    }
+    function hideModal(){
+        let par = this.parentElement.parentElement;
+        par.classList.remove('active');
+        hideOverlay();
+    }
+    function showOverLay(){
+        // create overlay
+        let overlay = document.createElement('div');
+        overlay.className = "overlay";
+        let overlayStyle = `
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background: #4c4c4c;
+            opacity: .5;
+            visibility: visible;
+        `;
+        overlay.setAttribute("style", overlayStyle)
+        document.body.appendChild(overlay);
+    }
+    function hideOverlay(){
+        let overlay = document.querySelector('.overlay');
+        overlay.remove();
+    }
+</script>
+</body>
+</html>
