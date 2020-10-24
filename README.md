@@ -9,3 +9,7 @@
   8.  Text Animation: https://shamimshakir.github.io/javascript-projects/js_text_animation.html
   9.  Basic Calculator: https://shamimshakir.github.io/javascript-projects/calculator.html
   10. Popup Modal: https://shamimshakir.github.io/javascript-projects/popup_modal.html
+  
+  
+  
+  # Intermediate Projects
