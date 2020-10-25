@@ -1,0 +1,339 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Match Card | JS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Grandstander:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        *{
+            margin:0;
+            padding: 0;
+        }
+        body{
+            height: 100vh;
+            font-family: 'Grandstander', cursive;
+            background: #3F51B5;
+            overflow: hidden;
+        }
+        .memoryCard {
+            width: 400px;
+            padding: 10px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            margin: auto;
+            border-radius: 3px;
+            grid-gap: 10px;
+            border: 1px solid #b9b9b9;
+            position: relative;
+        }
+
+        .singleCard {
+            background: #b9b9b9;
+            border-radius: 3px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            cursor: pointer;
+            height: 100px;
+            text-align: -webkit-match-parent;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .singleCard.active {
+            background: #fff;
+        }
+
+        .singleCard span {
+            visibility: hidden;
+            opacity: 0;
+            transition: .2s;
+        }
+
+        .singleCard.active span {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .singleCard span img {
+            display: none;
+        }
+
+        .singleCard.active span img {
+            display: block;
+        }
+
+        .singleCard span img {
+            height: auto;
+            max-width: 71px;
+        }
+        .gameActions {
+            width: 400px;
+            margin: 20px auto 10px;
+            color: #fff;
+            padding-top: 10px;
+        }
+
+        .gameActions h2 {
+            font-size: 30px;
+        }
+        .timeNstart {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .timeNstart button {
+            font-size: 19px;
+            border: navajowhite;
+            border-radius: 3px;
+            padding: 6px 10px;
+            margin-top: 10px;
+            outline: none;
+            cursor: pointer;
+            height: 36px;
+        }
+
+        .timeNstart p.moveCount {
+            font-size: 31px;
+            display: none;
+            padding-top: 4px;
+            text-align: right;
+        }
+        .gameBlock {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #333;
+            opacity: .6;
+            transition: .2s;
+        }
+        .gameBlock.hide {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .congratulations {
+            position: absolute;
+            left: 0;
+            top: 0;
+            z-index: 999999;
+            background: white;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+            display: none;
+        }
+
+        .congratsImg img {
+            width: 324px;
+        }
+
+        .congratsImg {
+            text-align: center;
+            margin-top: 106px;
+        }
+
+        .congratulations h2 {
+            font-size: 21px;
+            font-weight: 300;
+            color: #777;
+            margin-top: 14px;
+        }
+        .failed {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #fff;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            display: none;
+        }
+        span.moveLimit {
+            display: block;
+            font-size: 16px;
+        }
+
+        span.showMoveCount {
+            display: block;
+            font-size: 24px;
+            margin-bottom: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="gameActions">
+    <h2>Match Card</h2>
+    <div class="timeNstart">
+        <button class="startGame">Start Game</button>
+        <p class="moveCount">
+            <span class="showMoveCount"></span>
+            <span class="moveLimit">32</span>
+        </p>
+    </div>
+</div>
+<div class="memoryCard">
+    <div class="gameBlock"></div>
+    <div class="congratulations">
+        <div class="congratsImg">
+            <img src="http://www.pngall.com/wp-content/uploads/2017/05/Congratulation-Free-PNG-Image.png" alt="">
+        </div>
+        <h2>You did it </h2>
+    </div>
+    <div class="failed">
+        <h2>You Lost</h2>
+    </div>
+    <div class="singleCard" data-name="js">
+        <span><img src="https://www.freepnglogos.com/uploads/javascript-png/javascript-logo-transparent-logo-javascript-images-3.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="js">
+        <span><img src="https://www.freepnglogos.com/uploads/javascript-png/javascript-logo-transparent-logo-javascript-images-3.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="reactjs">
+        <span><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="reactjs">
+        <span><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/512px-React-icon.svg.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="ruby">
+        <span><img src="https://www.ruby-lang.org/images/header-ruby-logo.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="ruby">
+        <span><img src="https://www.ruby-lang.org/images/header-ruby-logo.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="java">
+        <span><img src="https://logos-download.com/wp-content/uploads/2016/10/Java_logo_icon-700x392.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="java">
+        <span><img src="https://logos-download.com/wp-content/uploads/2016/10/Java_logo_icon-700x392.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="swift">
+        <span><img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Apple-swift-logo.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="swift">
+        <span><img src="https://upload.wikimedia.org/wikipedia/commons/7/7a/Apple-swift-logo.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="nodejs">
+        <span><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/590px-Node.js_logo.svg.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="nodejs">
+        <span><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/Node.js_logo.svg/590px-Node.js_logo.svg.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="php">
+        <span><img src="https://www.php.net/images/logos/new-php-logo.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="php">
+        <span><img src="https://www.php.net/images/logos/new-php-logo.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="python">
+        <span><img src="https://www.freepngimg.com/thumb/python_logo/7-2-python-logo-free-download-png-thumb.png" alt=""></span>
+    </div>
+    <div class="singleCard" data-name="python">
+        <span><img src="https://www.freepngimg.com/thumb/python_logo/7-2-python-logo-free-download-png-thumb.png" alt=""></span>
+    </div>
+</div>
+
+<script>
+    const memoryCard = document.querySelector('.memoryCard');
+    const singleCards = document.querySelectorAll('.singleCard');
+    const moveCount = document.querySelector('.moveCount');
+    const startGame = document.querySelector('.startGame');
+    const gameBlock = document.querySelector('.gameBlock');
+    const congratulations = document.querySelector('.congratulations');
+    const moveLimit = moveCount.querySelector('.moveLimit');
+    const showMoveCount = moveCount.querySelector('.showMoveCount');
+    const failed = memoryCard.querySelector('.failed');
+    let limit = 30;
+    let moved = 0;
+    singleCards.forEach(singleCard => singleCard.addEventListener('click', showCardInner));
+    startGame.addEventListener('click',gameStart);
+    moveLimit.innerText = "Move limit: " + limit;
+
+    // Functions
+    let prevValue = "";
+
+    function showCardInner(){
+        if(!this.classList.contains("active")){
+            this.classList.toggle('active');
+            let name = this.dataset.name;
+            if(prevValue == ""){
+                prevValue = name;
+            }else{
+                checkMatched(name);
+            }
+        }
+    }
+
+    function gameStart(){
+        gameBlock.classList.add('hide');
+        congratulations.style.display = "none";
+        failed.style.display = "none";
+    }
+
+    function checkMatched(value){
+        let prevElement = document.querySelectorAll(`[data-name="${prevValue}"]`);
+        let currElement = document.querySelectorAll(`[data-name="${value}"]`);
+        if(prevValue != value){
+            prevElement.forEach(prev => {
+                if(prev.classList.contains("active")){
+                    setTimeout(function (){
+                        prev.classList.remove('active');
+                    },500)
+                }
+            });
+            currElement.forEach(curr => {
+                if(curr.classList.contains("active")){
+                    setTimeout(function (){
+                        curr.classList.remove('active');
+                    },500)
+                }
+            });
+        }
+
+        prevValue = "";
+
+        let checked = checkWin();
+
+        if(checked){
+            congratulations.style.display = "flex";
+        }else{
+            moveCount.style.display = "block";
+            moved++;
+            showMoveCount.innerText = "Moved :"+ moved;
+        }
+
+        let limitCross = limitCheck();
+        if(limitCross){
+            return;
+        }
+    }
+
+    function checkWin(){
+        let nodes = Array.from(singleCards);
+        return nodes.every(card => card.classList.contains('active'));
+    }
+    function limitCheck(){
+        if(moved == limit){
+            failed.style.display = 'flex';
+            return true;
+        }
+    }
+
+    (function shuffle() {
+        singleCards.forEach(singleCard => {
+            let position = Math.ceil(Math.random() * 12);
+            singleCard.style.order = position;
+        });
+    })();
+</script>
+</body>
+</html>
