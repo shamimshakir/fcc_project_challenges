@@ -13,3 +13,5 @@
   
   
   # Intermediate Projects
+
+  1. Match card game: https://shamimshakir.github.io/javascript-projects/match_card.html
