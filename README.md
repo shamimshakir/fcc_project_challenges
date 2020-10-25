@@ -7,11 +7,11 @@
   6.  Meditation / Breathing App: https://shamimshakir.github.io/javascript-projects/relaxerapp.html
   7.  Todo List: https://shamimshakir.github.io/javascript-projects/todojs.html
   8.  Text Animation: https://shamimshakir.github.io/javascript-projects/js_text_animation.html
-  9.  Basic Calculator: https://shamimshakir.github.io/javascript-projects/calculator.html
-  10. Popup Modal: https://shamimshakir.github.io/javascript-projects/popup_modal.html
+  9. Popup Modal: https://shamimshakir.github.io/javascript-projects/popup_modal.html
   
   
   
   # Intermediate Projects
 
-  1. Match card game: https://shamimshakir.github.io/javascript-projects/match_card.html
+  1. Basic Calculator: https://shamimshakir.github.io/javascript-projects/calculator.html
+  2. Match card game: https://shamimshakir.github.io/javascript-projects/match_card.html
