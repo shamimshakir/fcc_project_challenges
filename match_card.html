@@ -273,10 +273,18 @@
     }
 
     function gameStart(){
+        shuffle();
+        moved = 0;
+        showMoveCount.innerText = "Moved :"+ moved;
         gameBlock.classList.add('hide');
         congratulations.style.display = "none";
         failed.style.display = "none";
     }
+
+    function resetGame(){
+        singleCards.forEach(card => card.classList.remove('active'));
+    }
+
 
     function checkMatched(value){
         let prevElement = document.querySelectorAll(`[data-name="${prevValue}"]`);
@@ -327,12 +335,13 @@
         }
     }
 
-    (function shuffle() {
+    function shuffle() {
         singleCards.forEach(singleCard => {
+            singleCard.className = "singleCard";
             let position = Math.ceil(Math.random() * 12);
             singleCard.style.order = position;
         });
-    })();
+    };
 </script>
 </body>
 </html>
