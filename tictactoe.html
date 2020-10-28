@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Tic Tac Toe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body, html {
+            height: 100vh;
+            background: #7876a2;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Ubuntu', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .gameBoard {
+            width: 300px;
+            height: 300px;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr 1fr;
+            margin: 20px auto;
+            position: relative;
+            display: grid;
+            overflow: hidden;
+            background: #153e52b8;
+        }
+
+        .boardCell {
+            font-size: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .br {
+            border-right: 2px solid #fff;
+        }
+
+        .bb {
+            border-bottom: 2px solid #fff;
+        }
+        .gameChoose {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            background: #1a1f3a;
+            height: 100%;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-radius: 3px;
+            z-index: 20000;
+        }
+
+        .gameChoose h2 {
+            font-size: 37px;
+            margin-bottom: 12px;
+        }
+
+        .gameChoose button {
+            margin-top: 11px;
+            background: #03A9F4;
+            border: none;
+            outline: none;
+            font-size: 20px;
+            padding: 8px 20px;
+            color: #fff;
+            border-radius: 30px;
+            cursor: pointer;
+        }
+
+        button#twoPlayerBtn {
+            background: #4CAF50;
+        }
+        .gameChoose h2 span.tic {
+            transform: rotate(-14deg);
+            display: inline-block;
+        }
+
+        .gameChoose h2 span.tac {
+            transform: translateY(-16px);
+            display: inline-block;
+            font-size: -webkit-xxx-large;
+        }
+
+        .gameChoose h2 span.toe {
+            display: inline-block;
+            transform: rotate(26deg);
+        }
+
+        .tictactoe {
+            color: #fff;
+        }
+
+        .turnShow {
+            text-align: center;
+            font-size: 27px;
+            display: none;
+        }
+        .playerTurn {
+            align-items: center;
+            justify-content: space-around;
+            display: none;
+        }
+        .playerTurn button {
+            cursor: pointer;
+            border: none;
+            background: #ffff;
+            color: #333;
+            padding: 10px 20px;
+            font-size: 17px;
+            border-radius: 3px;
+            font-weight: 700;
+            line-height: 18px;
+            outline: none;
+            transition: .2s;
+        }
+        button.oplayer.active {
+            background: #93d042;
+        }
+
+        button.xplayer.active {
+            background: #68e3ff;
+        }
+        .boardCell.played {
+            pointer-events: none;
+        }
+        .showMsg {
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-size: 40px;
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            background: #3e3a96fa;
+            transform: scale(0.7) skewX(10deg);
+            transition: .3s;
+            opacity: 0;
+            visibility: hidden;
+        }
+        .showMsg button {
+            padding: 11px 20px;
+            border: none;
+            background: #fff;
+            border-radius: 3px;
+            font-size: 18px;
+            cursor: pointer;
+            outline: none;
+            margin-top: 10px;
+        }
+        .showMsg.active {
+            opacity: 1;
+            visibility: visible;
+            transform: scale(1) skewX(0deg);
+        }
+        .choosePlayer {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: #333;
+            z-index: 9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .playerFormGroup {
+            display: block;
+            margin: 4px;
+            font-size: 22px;
+        }
+        button.gameStartBtn {
+            background: #fff;
+            border: none;
+            font-size: 17px;
+            margin-top: 16px;
+            padding: 10px 20px;
+            font-weight: 400;
+            border-radius: 3px;
+            cursor: pointer;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="tictactoe">
+    <div class="turnShow">
+        <span class="player"> X </span> Turn
+    </div>
+    <div class="gameBoard">
+        <div class="gameChoose">
+            <h2>
+                <span class="tic">Tic</span>
+                <span class="tac">Tac</span>
+                <span class="toe">Toe</span>
+            </h2>
+            <button class="PlayerBtn one">With computer</button>
+            <button class="PlayerBtn two">With a friend</button>
+        </div>
+        <div class="choosePlayer">
+            <div class="playerFormGroup">
+                <input type="radio" id="x" name="player" value="X">
+                <label for="x">Play as X</label>
+            </div>
+            <div class="playerFormGroup">
+                <input type="radio" id="o" name="player" value="O">
+                <label for="o">Play as O</label>
+            </div>
+            <button class="gameStartBtn">Start Game</button>
+        </div>
+        <div class="showMsg">
+            <div class="showMsgBox"></div>
+            <button onClick="window.location.reload();">Play Again</button>
+        </div>
+        <div class="boardCell br bb"></div>
+        <div class="boardCell br bb"></div>
+        <div class="boardCell bb"></div>
+        <div class="boardCell br bb"></div>
+        <div class="boardCell br bb"></div>
+        <div class="boardCell bb"></div>
+        <div class="boardCell br"></div>
+        <div class="boardCell br"></div>
+        <div class="boardCell"></div>
+    </div>
+    <div class="playerTurn">
+        <button class="xplayer"><span>X</span> Player</button>
+        <button class="oplayer"><span>O</span> Player</button>
+    </div>
+</div>
+
+<script>
+    // Element Selections and declarations
+    const gameBoard = document.querySelector('.gameBoard');
+    const gameChoose = document.querySelector('.gameChoose');
+    const turnShow = document.querySelector('.turnShow');
+    const turnShowPlayer = turnShow.querySelector('.player');
+    const PlayerBtns = document.querySelectorAll('.PlayerBtn');
+    const playerTurn = document.querySelector('.playerTurn');
+    const boardCells= document.querySelectorAll('.boardCell');
+    const boardCellArr = Array.from(boardCells);
+    const showMsg = document.querySelector('.showMsg');
+    const showMsgBox = showMsg.querySelector('.showMsgBox');
+    const xplayer = playerTurn.querySelector('.xplayer');
+    const oplayer = playerTurn.querySelector('.oplayer');
+    const gameStartBtn = document.querySelector('.gameStartBtn');
+    const choosePlayer = document.querySelector('.choosePlayer');
+
+    let gameStatus;
+    let turnStatus;
+    let xColor = "#68e3ff"
+    let oColor = "#b5fd55";
+    let selectedPlayer;
+    let secondPlayer;
+    let boxArr = Array(9).fill("");
+    let winningConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+
+
+    // Events
+
+    PlayerBtns.forEach(btn => {
+        btn.addEventListener('click', function (){
+            gameStatus = this.classList.contains('one') ? 'computer' : 'human';
+            gameChoose.style.display = "none";
+        })
+    });
+    gameStartBtn.addEventListener('click', () => {
+        let player = document.querySelector('input[name="player"]:checked').value;
+        selectedPlayer = player;
+        secondPlayer = selectedPlayer === "X" ? "O" : "X";
+        turnStatus = player;
+        choosePlayer.style.display = "none";
+    })
+
+    boardCells.forEach((cell, index)=> {
+        if(!cell.classList.contains('played')){
+            cell.addEventListener('click', function () {
+                if(gameStatus === 'computer'){
+                    playWithComputer(this, index, selectedPlayer, secondPlayer);
+                }else{
+                    playWithFriend(this, index, turnStatus);
+                }
+            })
+        }
+    })
+
+
+
+    // Functions and states
+    function playWithComputer(cell,index, player1, player2){
+        cell.textContent = player1;
+        cell.classList.add('played');
+        changePlayerColor(cell);
+        boxArr[index] = player1;
+        let checkWin = checkWinLogic(boxArr);
+        if(checkWin){
+            showMessage(checkWin);
+            return;
+        }
+        let filteredCell = boardCellArr.filter(cell => !cell.classList.contains('played'));
+        let len = filteredCell.length;
+        if(len){
+            let random = Math.floor(Math.random() * len);
+            filteredCell[random].textContent = player2;
+            filteredCell[random].classList.add('played');
+            changePlayerColor(filteredCell[random]);
+            let index2 = boardCellArr.indexOf(filteredCell[random]);
+            boxArr[index2] = player2;
+            let checkWin = checkWinLogic(boxArr);
+            if(checkWin){
+                showMessage(checkWin);
+                return;
+            }
+        }
+        let drawCheck = checkDraw();
+        if(drawCheck){
+            showMessage("Draw");
+        }
+    }
+    function playWithFriend(cell, index, runningPlayer){
+        cell.textContent = runningPlayer;
+        showGameStatus();
+        cell.classList.add('played');
+        changePlayerColor(cell);
+        boxArr[index] = runningPlayer;
+        let checkWin = checkWinLogic(boxArr);
+        if(checkWin){
+            showMessage(checkWin);
+            return;
+        }
+        let drawCheck = checkDraw();
+        if(drawCheck){
+            showMessage("Draw");
+        }
+        changeGameStatus();
+    }
+    function checkWinLogic(arr){
+        let isWin = false;
+        winningConditions.forEach(row => {
+            if(arr[row[0]] === "X"){
+                if(arr[row[1]] === "X"){
+                    if(arr[row[2]] === "X"){
+                        isWin = "X";
+                    }
+                }
+            }else if(arr[row[0]] === "O"){
+                if(arr[row[1]] === "O"){
+                    if(arr[row[2]] === "O"){
+                        isWin = "O";
+                    }
+                }
+            }
+        });
+        return isWin;
+    }
+
+    function checkDraw(){
+        return boardCellArr.every(cell => cell.classList.contains('played'))
+    }
+
+    function showGameStatus(){
+        turnShow.style.display = 'block';
+        playerTurn.style.display = 'flex';
+        if(turnStatus === "X") {
+            xplayer.classList.add('active');
+            turnShowPlayer.textContent = "X";
+            turnShowPlayer.style.color = xColor;
+        }else{
+            oplayer.classList.add('active');
+            turnShowPlayer.textContent = "O";
+            turnShowPlayer.style.color = oColor;
+        }
+    }
+
+    function changeGameStatus(){
+        if(turnStatus === "X"){
+            turnStatus = "O";
+            turnShowPlayer.innerText = "O";
+            xplayer.classList.remove('active');
+            oplayer.classList.add('active');
+        }else if(turnStatus === "O"){
+            turnStatus = "X";
+            turnShowPlayer.innerText = "X";
+            xplayer.classList.add('active');
+            oplayer.classList.remove('active');
+        }
+
+    }
+
+    function showMessage(content){
+        showMsg.classList.add('active');
+        if(content === "Draw"){
+            showMsgBox.textContent = "Draw";
+        }else{
+            if(content === selectedPlayer){
+                showMsgBox.textContent = `You Won`;
+            }else{
+                showMsgBox.textContent = `${content} Won`;
+            }
+        }
+        playerTurn.style.display = "none";
+        turnShow.style.display = "none";
+    }
+
+    function changePlayerColor(cell){
+        if(cell.innerText === "X"){
+            cell.style.color = xColor;
+            turnShowPlayer.style.color = oColor;
+        }else{
+            cell.style.color = oColor;
+            turnShowPlayer.style.color = xColor;
+        }
+    }
+
+</script>
+</body>
+</html>
