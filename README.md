@@ -15,3 +15,4 @@
 
   1. Basic Calculator: https://shamimshakir.github.io/javascript-projects/calculator.html
   2. Match card game: https://shamimshakir.github.io/javascript-projects/match_card.html
+  3. TicTacToe game: https://shamimshakir.github.io/javascript-projects/tictactoe.html
