@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Progress Bar</title>
+    <style>
+        div.progressBar {
+            margin: 30px auto;
+            height: 32px;
+            width: 300px;
+            border: 4px solid #2196F3;
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+
+        }
+
+        body{
+            text-align: center;
+        }
+
+        .progressStatus {
+            width: 0%;
+            background: #2196F3;
+            height: 83%;
+            margin: 4px;
+            border-radius: 23px;
+            display: flex;
+            align-items: center;
+            transition: width .5s ease-in-out;
+        }
+        .progressStatus span {
+            margin: 10px;
+            transition: .5s ease-in-out;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+<h2>Javascript Progress Bar</h2>
+<div class="progressBar"><div class="progressStatus" data-limit="67"><span></span></div></div>
+<div class="progressBar"><div class="progressStatus" data-limit="34"><span></span></div></div>
+<div class="progressBar"><div class="progressStatus" data-limit="82"><span></span></div></div>
+</body>
+<script>
+    const progressBar = document.querySelectorAll('.progressBar');
+
+    progressBar.forEach(bar => {
+        const progressStatus = bar.querySelector('.progressStatus');
+        let progressSpan = progressStatus.querySelector('span');
+        let dataLimit = progressStatus.getAttribute('data-limit');
+        progressSpan.textContent = dataLimit + "%";
+        progressStatus.style.width = "1%";
+        let increase = setInterval(increasingWidth, 0);
+        let width = 1;
+        function increasingWidth(){
+            if(width >= dataLimit){
+                clearInterval(increase);
+            }else{
+                width++;
+                progressStatus.style.width = width + "%";
+            }
+        }
+    })
+</script>
+</html>
