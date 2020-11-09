@@ -7,8 +7,9 @@
   6.  Meditation / Breathing App: https://shamimshakir.github.io/javascript-projects/relaxerapp.html
   7.  Todo List: https://shamimshakir.github.io/javascript-projects/todojs.html
   8.  Text Animation: https://shamimshakir.github.io/javascript-projects/js_text_animation.html
-  9.  Popup Modal: https://shamimshakir.github.io/javascript-projects/popup_modal.html
-  10. Progress Bar: https://shamimshakir.github.io/javascript-projects/progressbar.html
+  9.  Popup Modal: https://shamimshakir.github.io/javascript-projects/popup_modal.html  
+  10. Progress Bar: https://shamimshakir.github.io/javascript-projects/progressbar.html 
+  11. react Blog Post: https://shamimshakir.github.io/javascript-projects/react_blogPosts.html
   
   
   
