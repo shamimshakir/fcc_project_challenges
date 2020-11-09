@@ -9,8 +9,8 @@
   8.  Text Animation: https://shamimshakir.github.io/javascript-projects/js_text_animation.html
   9.  Popup Modal: https://shamimshakir.github.io/javascript-projects/popup_modal.html  
   10. Progress Bar: https://shamimshakir.github.io/javascript-projects/progressbar.html 
-  11. react Blog Post: https://shamimshakir.github.io/javascript-projects/react_blogPosts.html
-  
+  11. React Blog Post: https://shamimshakir.github.io/javascript-projects/react_blogPosts.html
+  12. React Review Carousel: https://shamimshakir.github.io/javascript-projects/react_review_carousel.html
   
   
   # Intermediate Projects
