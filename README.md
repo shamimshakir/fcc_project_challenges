@@ -8,9 +8,10 @@
   7.  Todo List: https://shamimshakir.github.io/javascript-projects/todojs.html
   8.  Text Animation: https://shamimshakir.github.io/javascript-projects/js_text_animation.html
   9.  Popup Modal: https://shamimshakir.github.io/javascript-projects/popup_modal.html  
-  10. Progress Bar: https://shamimshakir.github.io/javascript-projects/progressbar.html 
+  10. Progress Bar: https://shamimshakir.github.io/javascript-projects/progressbar.html   
   11. React Blog Post: https://shamimshakir.github.io/javascript-projects/react_blogPosts.html
   12. React Review Carousel: https://shamimshakir.github.io/javascript-projects/react_review_carousel.html
+  13. React filterable product menu: https://shamimshakir.github.io/javascript-projects/react_filterable_product_menu.html
   
   
   # Intermediate Projects
