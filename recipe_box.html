@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+<!--    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        .recipeBox {
+            width: 1000px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 3px;
+            box-sizing: border-box;
+            box-shadow: 0 0 20px #00000030;
+            display: grid;
+            grid-template-columns: 30% 67%;
+            grid-gap: 26px;
+            position: relative;
+        }
+        body {
+            background: #ecffef;
+            /*font-family: "Open Sans", sans-serif;*/
+            font-family: "Montserrat", sans-serif;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        input {
+            width: 100%;
+            border: 1px solid #ddd;
+            height: 35px;
+            border-radius: 3px;
+            outline: none;
+            padding: 6px 10px;
+            box-sizing: border-box;
+            font-size: 17px;
+        }
+        textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            height: 100px;
+            border-radius: 3px;
+            outline: none;
+            padding: 6px 10px;
+            box-sizing: border-box;
+            font-size: 17px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        td,
+        th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        th {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+        }
+        .allRecipes table tr td {
+            padding: 3px 10px;
+            font-size: 14px;
+            color: #444;
+        }
+        .allRecipes table tr th {
+            font-weight: 500;
+        }
+        .alertBox {
+            position: absolute;
+            right: 5px;
+            background: #333;
+            color: #fff;
+            top: 5px;
+            padding: 5px 16px;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+        .alertBox {
+            position: absolute;
+            right: 5px;
+            background: #333;
+            color: #fff;
+            top: 5px;
+            padding: 5px 16px;
+            border-radius: 3px;
+            transition: 0.3s;
+        }
+
+        .alertBox.success {
+            background: #31c56c;
+        }
+
+        .alertBox.danger {
+            background: red;
+        }
+        span.commaNote {
+            display: block;
+            font-size: 11px;
+            color: #868686;
+            font-style: italic;
+        }
+        label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        h2.sectionTitle {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        button {
+            background: #333;
+            color: #fff;
+            border: none;
+            padding: 6px 8px;
+            border-radius: 3px;
+            font-size: 16px;
+            margin: 3px 0;
+            outline: none;
+            cursor: pointer;
+        }
+        button.dltBtn {
+            background: #ef3b3b;
+        }
+        button.editBtn {
+            background: #425df3;
+        }
+        .actionBtns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .actionBtns button {
+            margin: 0 3px;
+        }
+        button.buttonSuccess {
+            background: #3aa93f;
+        }
+
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<script type="text/babel" crossorigin >
+    const { useState, useEffect } = React;
+    const getRecipesFromStorage = () => {
+        let recipes = localStorage.getItem("recipes");
+        if (recipes) {
+            return JSON.parse(localStorage.getItem("recipes"));
+        } else {
+            return [];
+        }
+    };
+    function RecipeBox() {
+        const [recipeName, setRecipeName] = useState("");
+        const [ingredients, setIngredients] = useState("");
+        const [editMode, setEditMode] = useState(false);
+        const [editId, setEditId] = useState(null);
+        const [showAlert, setShowAlert] = useState({
+            show: false,
+            msg: "",
+            type: ""
+        });
+        const [recipeList, setRecipeList] = useState(getRecipesFromStorage());
+
+        const submitHandler = (e) => {
+            e.preventDefault();
+            if (recipeName && ingredients) {
+                let ingredsArr = ingredients.split(",").filter((item) => item);
+                const recipeObj = {
+                    name: recipeName,
+                    ingredients: ingredsArr
+                };
+                if(editMode){
+                    editRecipeToList(recipeObj);
+                }else {
+                    addRecipeToList(recipeObj);
+                }
+            }else{
+                showAlertMsg(true,"Recipe name and ingredients must not empty", 'danger');
+            }
+        };
+        const addRecipeToList = (recipe) => {
+            setRecipeList([...recipeList, recipe]);
+            clearInputFields();
+            showAlertMsg(true, "Recipe Added to List", "success");
+        };
+        const editRecipeToList = (recipe) => {
+            let newRecipeList = recipeList.map((item,index) => {
+                if(index === editId){
+                    return recipe;
+                }else{
+                    return item;
+                }
+            })
+            setRecipeList(newRecipeList);
+            showAlertMsg(true, "Recipe Updated successfully", "success");
+            clearInputFields();
+            setEditMode(false);
+            setEditId(null);
+        };
+        const clearInputFields = () => {
+            setIngredients("");
+            setRecipeName("");
+        };
+        const showAlertMsg = (show = false, msg = "", type = "") => {
+            setShowAlert({ show: show, msg: msg, type: type });
+        };
+        const removeRecipe = (index) => {
+            setRecipeList(recipeList.filter((recipe, rIndex) => rIndex !== index));
+            showAlertMsg(true, "Recipe Added From List", "danger");
+        };
+        const editRecipe = (id) => {
+            let editedItem = recipeList.find((recipe, index) => index === id);
+            setEditMode(true);
+            setEditId(id);
+            setRecipeName(editedItem.name);
+            setIngredients(editedItem.ingredients.join(','));
+        };
+        useEffect(() => {
+            localStorage.setItem("recipes", JSON.stringify(recipeList));
+        }, [recipeList]);
+        useEffect(() => {
+            setTimeout(() => {
+                setShowAlert({ show: false, msg: "", type: "" });
+            }, 5000);
+        }, [showAlert]);
+        return (
+            <div className="recipeBox">
+                {showAlert.show && (
+                    <div className={`alertBox ${showAlert.type}`}>{showAlert.msg}</div>
+                )}
+                <div className="recipeFormsection">
+                    <h2 className="sectionTitle">
+                        {editMode ? "Edit Recipe" : "Add Recipe"}
+                    </h2>
+                    <form onSubmit={submitHandler}>
+                        <div className="formGroup">
+                            <label htmlFor="recipeName">Recipe Name</label>
+                            <input
+                                type="text"
+                                name="recipeName"
+                                id="recipeName"
+                                value={recipeName}
+                                onChange={(e) => setRecipeName(e.target.value)}
+                            />
+                        </div>
+                        <div className="formGroup">
+                            <label htmlFor="ingredients">Ingredients</label>
+                            <span className="commaNote">write comma(,) separated items</span>
+                            <textarea
+                                name="ingredients"
+                                id="ingredients"
+                                value={ingredients}
+                                onChange={(e) => setIngredients(e.target.value)}
+                            ></textarea>
+                        </div>
+                        <button className="buttonSuccess" type="submit">
+                            {editMode ? "Edit Recipe" : "Add Recipe"}
+                        </button>
+                    </form>
+                </div>
+                <div className="allRecipes">
+                    <h2 className="sectionTitle">Recipes</h2>
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Recipe Name</th>
+                            <th>Ingredients</th>
+                            <th width="8%">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {recipeList.map((recipe, index) => {
+                            return (
+                                <tr key={index}>
+                                    <td>{recipe.name}</td>
+                                    <td>
+                                        {Array.isArray(recipe.ingredients) &&
+                                        recipe.ingredients.map((ingreds, indexKey) => {
+                                            return <li key={indexKey}>{ingreds}</li>;
+                                        })}
+                                    </td>
+                                    <td>
+                                        <div className="actionBtns">
+                                            <button
+                                                onClick={() => editRecipe(index)}
+                                                className="editBtn"
+                                            >
+                                                <i className="fas fa-pen-square"></i>
+                                            </button>
+                                            <button
+                                                onClick={() => removeRecipe(index)}
+                                                className="dltBtn"
+                                            >
+                                                <i className="fas fa-trash"></i>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            );
+                        })}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        );
+    }
+    ReactDOM.render(<RecipeBox />, document.getElementById("root"));
+
+
+</script>
+</body>
+</html>
