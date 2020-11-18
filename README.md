@@ -13,10 +13,11 @@
   12. React Review Carousel: https://shamimshakir.github.io/javascript-projects/react_review_carousel.html
   13. React filterable product menu: https://shamimshakir.github.io/javascript-projects/react_filterable_product_menu.html
   
-  
+ 
   # Intermediate Projects
 
   1. Basic Calculator: https://shamimshakir.github.io/javascript-projects/calculator.html
   2. Match card game: https://shamimshakir.github.io/javascript-projects/match_card.html
   3. TicTacToe game: https://shamimshakir.github.io/javascript-projects/tictactoe.html
   4. React | FCC Recipe Box: https://shamimshakir.github.io/javascript-projects/recipe_box.html
+  5. React | FCC Forum homepage build: https://shamimshakir.github.io/javascript-projects/fcc_forum_homepage.html
