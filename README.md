@@ -20,4 +20,4 @@
   2. Match card game: https://shamimshakir.github.io/javascript-projects/match_card.html
   3. TicTacToe game: https://shamimshakir.github.io/javascript-projects/tictactoe.html
   4. React | FCC Recipe Box: https://shamimshakir.github.io/javascript-projects/recipe_box.html
-  5. React | FCC Forum homepage build: https://shamimshakir.github.io/javascript-projects/fcc_forum_homepage.html
+  5. React | FCC Forum homepage build: https://shamimshakir.github.io/javascript-projects/fcc_forum_homepage
