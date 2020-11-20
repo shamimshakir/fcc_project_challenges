@@ -1,0 +1,43 @@
+.blogPosts {
+    width: 700px;
+    margin: 22px auto 0;
+}
+body{
+    font-family: 'Montserrat', sans-serif;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+.singlePost {
+    padding: 20px;
+    box-sizing: border-box;
+    background: #fff;
+    margin: 20px 0;
+    border-radius: 3px;
+    box-shadow: 0 0 30px #d4d4d4;
+}
+.singlePost img {
+    width: 100%;
+    height: auto;
+}
+.singlePost h2 {
+    margin-top: 11px;
+    margin-bottom: 13px;
+}
+
+.singlePost p {
+    line-height: 25px;
+    font-size: 14px;
+}
+.loading {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.loading h2 {
+    font-size: 49px;
+    color: #4e6890;
+}
