@@ -1,0 +1,139 @@
+.recipeBox {
+    width: 1000px;
+    margin: 30px auto;
+    background: #fff;
+    padding: 20px;
+    border-radius: 3px;
+    box-sizing: border-box;
+    box-shadow: 0 0 20px #00000030;
+    display: grid;
+    grid-template-columns: 30% 67%;
+    grid-gap: 26px;
+    position: relative;
+}
+body {
+    background: #ecffef;
+    /*font-family: "Open Sans", sans-serif;*/
+    font-family: "Montserrat", sans-serif;
+}
+* {
+    margin: 0;
+    padding: 0;
+}
+input {
+    width: 100%;
+    border: 1px solid #ddd;
+    height: 35px;
+    border-radius: 3px;
+    outline: none;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    font-size: 17px;
+}
+textarea {
+    width: 100%;
+    border: 1px solid #ddd;
+    height: 100px;
+    border-radius: 3px;
+    outline: none;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    font-size: 17px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+td,
+th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+}
+.allRecipes table tr td {
+    padding: 3px 10px;
+    font-size: 14px;
+    color: #444;
+}
+.allRecipes table tr th {
+    font-weight: 500;
+}
+.alertBox {
+    position: absolute;
+    right: 5px;
+    background: #333;
+    color: #fff;
+    top: 5px;
+    padding: 5px 16px;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+.alertBox {
+    position: absolute;
+    right: 5px;
+    background: #333;
+    color: #fff;
+    top: 5px;
+    padding: 5px 16px;
+    border-radius: 3px;
+    transition: 0.3s;
+}
+
+.alertBox.success {
+    background: #31c56c;
+}
+
+.alertBox.danger {
+    background: red;
+}
+span.commaNote {
+    display: block;
+    font-size: 11px;
+    color: #868686;
+    font-style: italic;
+}
+label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+}
+
+h2.sectionTitle {
+    font-size: 20px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+button {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 6px 8px;
+    border-radius: 3px;
+    font-size: 16px;
+    margin: 3px 0;
+    outline: none;
+    cursor: pointer;
+}
+button.dltBtn {
+    background: #ef3b3b;
+}
+button.editBtn {
+    background: #425df3;
+}
+.actionBtns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.actionBtns button {
+    margin: 0 3px;
+}
+button.buttonSuccess {
+    background: #3aa93f;
+}
