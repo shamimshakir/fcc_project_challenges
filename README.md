@@ -21,3 +21,4 @@
   3. TicTacToe game: https://shamimshakir.github.io/javascript-projects/tictactoe.html
   4. React | FCC Recipe Box: https://shamimshakir.github.io/javascript-projects/recipe_box
   5. React | FCC Forum homepage build: https://shamimshakir.github.io/javascript-projects/fcc_forum_homepage
+  6. React | Quiz App: https://shamimshakir.github.io/javascript-projects/react_quizapp.html
