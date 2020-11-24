@@ -1,0 +1,243 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+        }
+        body {
+            background: #c3d0ff;
+            font-family: "Montserrat", sans-serif;
+        }
+        p.singleOption {
+            background: #e4e4e4;
+            margin-bottom: 2px;
+            color: #000;
+            word-break: break-all;
+            padding: 7px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 22px;
+        }
+        p.singleOption.active {
+            background: gray;
+        }
+        .quizApp {
+            width: 600px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            position: relative;
+            border-radius: 3px;
+        }
+
+        h3.currentScore {
+            position: absolute;
+            right: 23px;
+            top: 35px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 3px;
+        }
+
+        .currentQuestionBox h2 {
+            font-size: 18px;
+            font-weight: 500;
+            margin: 30px 0;
+        }
+
+        button {
+            background: #673ab7;
+            border: none;
+            outline: none;
+            color: #fff;
+            cursor: pointer;
+            padding: 8px 20px;
+            font-size: 16px;
+            border-radius: 3px;
+            margin-top: 28px;
+        }
+
+        .quizActionButtonn {
+            text-align: center;
+        }
+        .questionOptions {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            grid-column-gap: 23px;
+            grid-row-gap: 10px;
+        }
+
+        .quizActionButtonn button {
+            margin: 0 12px;
+            margin-top: 30px;
+        }
+        .resultBox h3 {
+            margin-top: 16px;
+            font-weight: 500;
+        }
+
+        .resultBox p {
+            font-size: 15px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+<div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+<script type="text/babel" crossorigin >
+    const { useState, useEffect, useRef } = React;
+    const questions = [
+        {
+            question: "Inside which HTML element do we put the JavaScript?",
+            options: ["<scripting>", "<js>", "<script>", "<javascript>"],
+            answer: 2
+        },
+        {
+            question: `What is the correct JavaScript syntax to change the content of the HTML element below? <br> <p id="demo">This is a demonstration.</p>`,
+            options: [
+                `document.getElementById('demo').innerHTML = 'Hello World!';`,
+                `#demo.innerHTML = 'Hello World!';`,
+                `document.getElement("p").innerHTML = "Hello World!";`,
+                `document.getElementByName("p").innerHTML = "Hello World!";`
+            ],
+            answer: 0
+        },
+        {
+            question: `Where is the correct place to insert a JavaScript?`,
+            options: [
+                `Both the <head> section and the <body> section are correct`,
+                `The <head> section`,
+                `The <body> section`
+            ],
+            answer: 2
+        },
+        {
+            question: `What is the correct syntax for referring to an external script called "xxx.js"?`,
+            options: [
+                `<script src="xxx.js">`,
+                `<script name="xxx.js">`,
+                `<script href="xxx.js">`
+            ],
+            answer: 0
+        }
+    ];
+
+    function QuizAppRunTest() {
+        const [currentIndex, setCurrentIndex] = useState(0);
+        const [resultScores, setResultScores] = useState([]);
+        const [checkEnd, setCheckEnd] = useState(false);
+        const [activeOption, setActiveOption] = useState('');
+        const gotResult = resultScores.filter((score) => score === 1).length;
+        const checkEndStatus = (index) => {
+            if (index === questions.length) {
+                setCheckEnd(true);
+                setCurrentIndex(0);
+            }
+        };
+        const nextQuiz = () => {
+            let options = document.querySelectorAll('.singleOption');
+            let checkActive = false;
+            options.forEach(option => {
+                if(option.classList.contains('active')){
+                    checkActive = true;
+                }
+            });
+            if(checkActive){
+                checkCurrectAnswer();
+                let upNext = currentIndex + 1;
+                if (upNext !== questions.length) {
+                    setCurrentIndex(currentIndex + 1);
+                    setActiveOption('');
+                } else {
+                    checkEndStatus(currentIndex + 1);
+                }
+            }else{
+                alert('You must select an option');
+            }
+        };
+        const checkCurrectAnswer = () => {
+            if (activeOption === questions[currentIndex].answer) {
+                setResultScores([...resultScores, 1]);
+            } else {
+                setResultScores([...resultScores, 0]);
+            }
+        };
+        const handleClick = (e) => {
+            let itemIndex = 0;
+            questions[currentIndex].options.forEach((item, index) => {
+                if (item === e.target.textContent) {
+                    itemIndex = index;
+                }
+            });
+            setActiveOption(itemIndex);
+        };
+        if (checkEnd) {
+            return (
+                <div className="resultBox">
+                    <h3>
+                        Result: Your score <span>{gotResult}</span> out of {questions.length}{" "}
+                    </h3>
+                    {resultScores.map((score, index) => {
+                        return (
+                            <p key={index}>
+                                {index + 1} : {score === 1 ? "correct" : "wrong"}
+                            </p>
+                        );
+                    })}
+                </div>
+            );
+        } else {
+            return (
+                <div className="quizField">
+                    <div className="currentQuestionBox">
+                        <h2>{currentIndex + 1} : {questions[currentIndex].question}</h2>
+                        <h3 className="currentScore">Score: {gotResult}</h3>
+                        <div className="questionOptions">
+                            {questions[currentIndex].options.map((option, opIndex) => {
+                                return (
+                                    <p key={opIndex} onClick={handleClick} className={opIndex === activeOption ? "singleOption active" : "singleOption"}>
+                                        {option}
+                                    </p>
+                                );
+                            })}
+                        </div>
+                    </div>
+                    <div className="quizActionButtonn">
+                        <button onClick={nextQuiz}>Next</button>
+                    </div>
+                </div>
+            );
+        }
+    }
+    function QuizApp() {
+        const [startQuiz, setStartQuiz] = useState(false);
+        return (
+            <div className="quizApp">
+                <h2>Quiz App</h2>
+
+                {!startQuiz && (
+                    <button onClick={() => setStartQuiz(true)}>Start Quiz</button>
+                )}
+                {startQuiz && <QuizAppRunTest />}
+            </div>
+        );
+    }
+    ReactDOM.render(<QuizApp />, document.getElementById("root"));
+
+</script>
+</body>
+</html>
