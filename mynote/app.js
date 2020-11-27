@@ -30,6 +30,7 @@ const note = document.getElementById("note");
             let noteObj = {note:notesArr, gcolor};
             saveToStorage(noteObj);
             displayNotes();
+            note.value = '';
         }
     });
     noteGrid.addEventListener('click', function(e) {
