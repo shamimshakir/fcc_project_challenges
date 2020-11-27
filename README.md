@@ -12,6 +12,7 @@
   11. React Blog Post: https://shamimshakir.github.io/javascript-projects/react_blogPosts
   12. React Review Carousel: https://shamimshakir.github.io/javascript-projects/react_review_carousel.html
   13. React filterable product menu: https://shamimshakir.github.io/javascript-projects/react_filterable_product_menu.html
+  14. My Sticky Note App: https://shamimshakir.github.io/javascript-projects/mynote
   
  
   # Intermediate Projects
