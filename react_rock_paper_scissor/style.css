@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+}
+body {
+    background: #c0ebbc;
+    font-family: "Montserrat", sans-serif;
+}
+
+.Game {
+    background: #fff;
+    width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border-radius: 3px;
+    text-align: center;
+}
+
+.optionHands {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.resultboard {
+    display: flex;
+    justify-content: center;
+}
+
+.gameGround {
+    display: flex;
+    justify-content: center;
+    margin: 30px 0;
+}
+
+.gameGround div {
+    background: #7f90f3;
+    width: 200px;
+    height: 100px;
+    margin: 10px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.resultboard p {
+    margin: 0 15px;
+}
+
+.optionHands p {
+    display: flex;
+    flex-direction: column;
+    margin: 0 20px;
+    cursor: pointer;
+}
+
+.optionHands span {
+    color: #000000;
+}
+
+.gameGround i {
+    font-size: 43px;
+    color: #fff;
+    transition: .3s;
+}
+
+.optionHands span i {
+    color: #3f51b5;
+    font-size: 22px;
+}
+.gameStarter input {
+    display: block;
+    width: 230px;
+    margin-bottom: 15px;
+    padding: 5px 10px;
+    border: 1px solid #673ab7;
+    outline: none;
+    border-radius: 3px;
+}
+
+.gameStarter {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.gameStarter input::placeholder {
+    color: #673ab7;
+}
+
+button.startGameBtn {
+    border: none;
+    outline: none;
+    background: #673ab7;
+    color: #fff;
+    cursor: pointer;
+    padding: 6px 12px;
+    border-radius: 3px;
+    font-size: 17px;
+}
+
+h1.gameTitle {
+    margin-bottom: 20px;
+}
+
+p.gameLabel {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.finalResultBox h3 {
+    font-weight: 500;
+    margin-bottom: 20px;
+}
