@@ -66,47 +66,44 @@ const { useState, useEffect } = React;
         useEffect(() => {
             checkRoundLimit();
         }, [countRound]);
-        if (endGame) {
-            return <div className="finalResultBox">
-                <h3>{finalWinner}</h3>
-                <button className="startGameBtn" onClick={() => location.reload()}>Play Again</button>
-            </div>;
-        }
+
         return (
             <div className="playingGround">
-                <div className="resultboard">
-                    <p>
-                        {playerInfo.name}: <strong>{yourScore}</strong>
-                    </p>
-                    <p>
-                        Computer: <strong>{aiScore}</strong>
-                    </p>
+                {endGame && <div className="finalResultBox">
+                    <h3>{finalWinner}</h3>
+                    <button className="startGameBtn" onClick={() => location.reload()}>Play Again</button>
+                </div>}
+                <div className="gameCurrentInfo">
+                    <p>Total Round: <strong>{playerInfo.round}</strong></p>
+                    <p>Played Round: <strong>{countRound}</strong></p>
                 </div>
                 <div className="gameGround">
-                    <div className="firstPlayerArea">
-                        <i className={`fas fa-hand-${runningHands[0]}`}></i>
+                    <div>
+                        <p>
+                            {playerInfo.name}: <strong>{yourScore}</strong>
+                        </p>
+                        <div className="firstPlayerArea">
+                            <i className={`fas fa-hand-${runningHands[0]}`}></i>
+                        </div>
                     </div>
-                    <div className="scndPlayerArea">
-                        <i className={`fas fa-hand-${runningHands[1]}`}></i>
+                    <div>
+                        <p>Computer: <strong>{aiScore}</strong></p>
+                        <div className="scndPlayerArea">
+                            <i className={`fas fa-hand-${runningHands[1]}`}></i>
+                        </div>
                     </div>
                 </div>
                 <div className="optionHands">
                     <p onClick={() => playGameWith("rock")}>
-          <span>
-            <i className="fas fa-hand-rock"></i>
-          </span>
+                        <span><i className="fas fa-hand-rock"></i></span>
                         <span>Rock</span>
                     </p>
                     <p onClick={() => playGameWith("paper")}>
-          <span>
-            <i className="fas fa-hand-paper"></i>
-          </span>
+                        <span><i className="fas fa-hand-paper"></i></span>
                         <span>Paper</span>
                     </p>
                     <p onClick={() => playGameWith("scissors")}>
-          <span>
-            <i className="fas fa-hand-scissors"></i>
-          </span>
+                        <span><i className="fas fa-hand-scissors"></i></span>
                         <span>Scissor</span>
                     </p>
                 </div>
