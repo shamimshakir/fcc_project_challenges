@@ -24,3 +24,4 @@
   5. React | FCC Forum homepage build: https://shamimshakir.github.io/javascript-projects/fcc_forum_homepage
   6. React | Quiz App: https://shamimshakir.github.io/javascript-projects/react_quizapp.html
   7. React | Rock Paper Scissor: https://shamimshakir.github.io/javascript-projects/react_rock_paper_scissor
+  8. React | Shopping Cart: https://shamimshakir.github.io/javascript-projects/react_shopping_cart
