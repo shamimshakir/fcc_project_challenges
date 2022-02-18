@@ -92,15 +92,19 @@
           mainWords: [],
           colOnOff: ["english", "bangla"],
           wordForm: {},
-          date_data: null
+          date_data: ""
         }
       },
       watch: {
         date_data(value) {
-          let wordsByDate = this.mainWords.filter(word => {
-            return this.isSameDay(new Date(word.created_at), new Date(value));
-          });
-          this.words = wordsByDate;
+            if(value){
+                let wordsByDate = this.mainWords.filter(word => {
+                    return this.isSameDay(new Date(word.created_at), new Date(value));
+                });
+                this.words = wordsByDate;
+            }else{
+                this.words = this.mainWords;
+            }
         }
       },
       methods: {
