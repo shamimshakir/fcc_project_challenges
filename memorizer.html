@@ -104,14 +104,14 @@
                     </thead>
                     <tbody>
                         <tr v-for="(word, index) in words" :key="word.id">
-                            <td>{{ index + 1 }}</td>
-                            <td v-if="colOnOff.includes('english')">
+                            <td>
                                 <span @click="changeStatus(word.id)" v-if="word.status == 1"
                                     style="color: green; cursor: pointer;">&#9734;</span>
                                 <span @click="changeStatus(word.id)" v-else
                                     style="color: red; cursor: pointer;">&#9733;</span>
-                                {{ word.en_word }}
+                                {{ index + 1 }}
                             </td>
+                            <td v-if="colOnOff.includes('english')">{{ word.en_word }}</td>
                             <td class="banglaText" v-if="colOnOff.includes('bangla')">{{ word.bn_meaning }}</td>
                             <td v-if="colOnOff.includes('example')">{{ word.examples }}</td>
                             <td v-if="colOnOff.includes('edit')">
