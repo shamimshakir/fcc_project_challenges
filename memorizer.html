@@ -230,7 +230,6 @@
                     axios.put(`https://nextech.readyeshop.com/api/vocs/update_status/${id}`, {})
                         .then(response => {
                             alert(response.data.message);
-                            this.getWords();
                         })
                         .catch(function (error) {
                             console.dir(error);
