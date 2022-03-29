@@ -76,6 +76,7 @@
                                 Options
                             </button>
                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                <li><a class="dropdown-item" @click="reverselist()" href="#">Reverse</a></li>
                                 <li><a class="dropdown-item" @click="shuffle()" href="#">Randomize</a></li>
                                 <li><a class="dropdown-item" @click="fullMemo()" href="#">Full Memorised</a></li>
                                 <li><a class="dropdown-item" @click="halfMemo()" href="#">Half Memorised</a></li>
@@ -277,6 +278,9 @@
                             array[randomIndex], array[currentIndex]];
                     }
                     this.words = array;
+                },
+                reverselist(){
+                    this.words = this.mainWords.reverse();
                 },
                 fullMemo(){
                     this.words = this.mainWords.filter(word => word.status === 1);
